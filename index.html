@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>الشاعر أبو سمرة | Abu Samra Poet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. إعدادات التصميم العامة (CSS)
+           ========================================= */
+        :root {
+            --bg-dark: #0a0a0e;
+            --panel-bg: rgba(20, 20, 25, 0.95);
+            --gold: #d4af37;
+            --gold-dim: #8a7020;
+            --text-main: #f0f0f0;
+            --red-hack: #ff003c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 50%, #1a1a20 0%, #000 100%);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================================
+           2. شاشة الاختراق (المقلب)
+           ========================================= */
+        #hack-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: black;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hack-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--red-hack);
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px #fff;
+            animation: glitch 0.2s infinite;
+        }
+
+        .hack-details {
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            color: #fff;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-3px, 3px) }
+            40% { transform: translate(-3px, -3px) }
+            60% { transform: translate(3px, 3px) }
+            80% { transform: translate(3px, -3px) }
+            100% { transform: translate(0) }
+        }
+
+        .shake-body {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both infinite;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* =========================================
+           3. واجهة الدردشة (الشاعر)
+           ========================================= */
+        #app-container {
+            display: none; /* مخفي في البداية */
+            flex-direction: column;
+            height: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            background: var(--bg-dark);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* الهيدر */
+        header {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--gold);
+            background: var(--panel-bg);
+            z-index: 10;
+        }
+
+        header h1 {
+            color: var(--gold);
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* منطقة الشات */
+        #chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        /* الرسائل */
+        .message {
+            max-width: 85%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+            position: relative;
+            word-wrap: break-word;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-msg {
+            align-self: flex-start;
+            background: linear-gradient(145deg, #2c2c35, #1f1f25);
+            color: #fff;
+            border-bottom-right-radius: 2px;
+            border: 1px solid #333;
+        }
+
+        .user-msg {
+            align-self: flex-end;
+            background: linear-gradient(145deg, var(--gold), #b3922d);
+            color: #000;
+            font-weight: bold;
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        /* تنسيق القصيدة */
+        .poem-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 3px solid var(--gold);
+            padding: 10px;
+            margin-top: 8px;
+            font-weight: 600;
+            white-space: pre-line; /* يحافظ على الأسطر */
+            color: #e6e6e6;
+            font-size: 1.1rem;
+        }
+
+        /* منطقة الكتابة */
+        .input-area {
+            padding: 15px;
+            background: var(--panel-bg);
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border-radius: 30px;
+            border: 1px solid #444;
+            background: #0f0f13;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        button {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        /* المؤشر */
+        .typing {
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+            display: none;
+            align-self: flex-start;
+            padding-right: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="hack-overlay">
+        <div class="hack-text">⚠️ HACKED ⚠️</div>
+        <div class="hack-text" style="font-size: 1.5rem; margin-top:10px">تم اختراق النظام</div>
+        <div class="hack-details">
+            جاري سحب الصور... 100%<br>
+            جاري تحديد الموقع...<br>
+            <span style="color:red">تم الوصول لبياناتك بنجاح!</span>
+        </div>
+    </div>
+
+    <div id="app-container">
+        <header>
+            <h1>الشاعر أبو سمرة ✒️</h1>
+            <p>اكتب اسمك وأبشر بأحلى قصيدة</p>
+        </header>
+
+        <div id="chat-box">
+            </div>
+
+        <div class="typing" id="typing-indicator">أبو سمرة يكتب قصيدة...</div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="اكتب الاسم هنا..." autocomplete="off">
+            <button onclick="handleInput()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================
+           4. البرمجة والمنطق (JavaScript)
+           ========================================= */
+
+        const hackOverlay = document.getElementById('hack-overlay');
+        const appContainer = document.getElementById('app-container');
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('userInput');
+        const typingIndicator = document.getElementById('typing-indicator');
+
+        // مكتبة القصائد (قوالب جاهزة يتم تركيب الاسم عليها)
+        // [NAME] سيتم استبدالها باسم المستخدم
+        const poemsLibrary = [
+            "يا [NAME] يا راعي الطيب والجود\nيا مسندي لا شانت أيام دهري\nغلاك في قلبي تعدى كل حدود\nيا تاج راسي وفخري وعزي",
+            
+            "سر يا قلم واكتب لـ [NAME] رسالة\nحبرها مسك وطيب وعود فاخر\nشيخ المراجل ما يبي له دلالة\nالطيب ساسه من قديم ومآخر",
+
+            "يا [NAME] اسمك في السما عالي شانه\nمثل النجم يلمع في ليل الدجى ضي\nلك مجلسٍ بالصدر عالي مكانه\nولك فزعةٍ تروي كبودٍ عطاشي",
+
+            "من شاف [NAME] طابت النفس والروح\nوزالت هموم القلب وانزاح ضيقه\nوجه السعد والباب بالخير مفتوح\nيا جعل ربي يسعده في طريقه",
+
+            "يا حي هالطلة ويا حي [NAME]\nيا مرحبـا ترحيبـة البـدو للسيـل\nاسمك فخر والمدح فيكم علامة\nيا كاسب الطولات جيلٍ ورا جيل",
+
+            "سلام يا [NAME] عدد وبل الأمطار\nوإعداد ما نبت الشجر بالصحاري\nلك معزةٍ في داخل القلب ومقدار\nما ينمحي مهما تطول المشاري",
+
+            "يا [NAME] لو يوزن غلاك بميزان\nرجح بميزان الذهب والألماسي\nأنت الخوي اللي على الروح سلطان\nوأنت الرفيق اللي يرفع الراسي",
+
+            "حنا ذخرنا في المواقف [NAME]\nلا كبرت القالات حنا سنوده\nشيخٍ ولد شيخٍ رفيع مقامه\nكل المراجل والوفا في وجوده",
+
+            "قالوا تمنى قلت يا ناس [NAME]\nيبقى ذخر لي في الليال العسيرة\nما غيره اللي يستحق الكرامة\nولا غيره اللي نستشيره ونشيره",
+
+            "أبشر بعزك يا [NAME] وأبشر بالخير\nحنا سيوفك لا غدى الوقت قاسي\nلك في الحنايا حب وتقدير وكبير\nما يهزه ريحٍ ولا هو بناسي",
+
+            "يا [NAME] جعل ربي يخليك لعين ترجيك\nويحفظك من شر الصواديف والياس\nالطيب في يمناك والجود يطريك\nيا درةٍ ما مثلها بين هالناس",
+
+            "يا زين طبعك يا [NAME] ويا زين مبداك\nراعي وفا ما تعرف الغدر والخون\nكل الجمايل والوفا في محياك\nيا جعل يفدونك جميع اللي يكرهون",
+
+            "يا [NAME] لا يهمك كلام العواذل\nأنت الجبل ما هزته ريح هوجاء\nطبعك ثقيل وبالكرم دوم باذل\nواسمك ينور في الدجى مثل ضوجاء",
+
+            "سلام يا [NAME] كثر ما قيل يا صاح\nوكثر النجوم السارية بالمجرة\nيا بلسم المجروح يا طب الجراح\nيا سعد عين اللي تمنى يمره",
+            
+            "يا [NAME] لك في القلب حشمة وتقدير\nوالله يعلم بالخفايا والاسرار\nانك عزيز ولك معزة وتوقير\nوانك سنافي من طويلين الاعمار",
+             
+            "يا عل عين ما تودك يا [NAME] تعمى\nويا عل دار ما تضمك خليّة\nانت الرفيق اللي على الطيب ينمى\nوالنفس بك يا صاحبي جد هنيّة"
+        ];
+        
+        // إضافة المزيد من الأبيات لتصل لعدد كبير نظرياً عبر التنويع
+        // (تم الاكتفاء بعينة قوية جداً لضمان عدم ثقل الكود، الكود سيختار عشوائياً)
+
+        // =========================================
+        // تشغيل المقلب عند فتح الموقع
+        // =========================================
+        window.onload = function() {
+            // تشغيل الاهتزاز
+            document.body.classList.add('shake-body');
+            
+            setTimeout(() => {
+                // إيقاف المقلب
+                document.body.classList.remove('shake-body');
+                hackOverlay.style.display = 'none';
+                appContainer.style.display = 'flex';
+                
+                // رسالة الترحيب والمزح
+                setTimeout(() => {
+                    addBotMessage("😂😂😂 أمزح عليك يا وحش!");
+                }, 500);
+
+                setTimeout(() => {
+                    addBotMessage("معك أخوك الشاعر **أبو سمرة**.");
+                    addBotMessage("أبو سمرة قالي أطقطق عليك شوي بالمقلب.<br>المهم.. ارحب ارحب! عطني اسمك وأبشر بأحلى قصيدة.");
+                }, 1500);
+
+            }, 3000); // مدة المقلب 4 ثواني
+        };
+
+        // =========================================
+        // التعامل مع الإدخال
+        // =========================================
+        function handleInput() {
+            const name = userInput.value.trim();
+            if (!name) return;
+
+            // 1. عرض اسم المستخدم
+            addUserMessage(name);
+            userInput.value = '';
+
+            // 2. محاكاة التفكير والكتابة
+            typingIndicator.style.display = 'block';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                
+                // 3. اختيار قصيدة عشوائية
+                const randomPoem = poemsLibrary[Math.floor(Math.random() * poemsLibrary.length)];
+                
+                // 4. تركيب الاسم داخل القصيدة
+                const personalizedPoem = randomPoem.replace(/\[NAME\]/g, name);
+                
+                // 5. عرض القصيدة
+                const reply = `تستاهل يا **${name}**، اسمع وش أقول فيك:\n<div class="poem-card">${personalizedPoem}</div>`;
+                addBotMessage(reply);
+
+            }, 1500); // تأخير 1.5 ثانية للواقعية
+        }
+
+        // دالة إضافة رسالة البوت
+        function addBotMessage(html) {
+            const div = document.createElement('div');
+            div.className = 'message bot-msg';
+            div.innerHTML = html;
+            chatBox.appendChild(div);
+            scrollToBottom();
+        }
+
+        // دالة إضافة رسالة المستخدم
+        function addUserMessage(text) {
+            const div = document.createElement('div');
+            div.className = 'message user-msg';
+            div.textContent = text;
+            chatBox.appendChild(div);
+            scrollToBottom();
+        }
+
+        // النزول لآخر المحادثة
+        function scrollToBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // تشغيل زر Enter
+        userInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                handleInput();
+            }
+        });
+
+    </script>
+</body>
+</html>
