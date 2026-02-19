@@ -252,33 +252,48 @@
             const inputSymbols = benchItems.map(i => i.s).sort();
             const inputKey = inputSymbols.join(',');
 
-            // قاموس التفاعلات (مختصر للعرض، يمكن زيادته بلا حدود)
+            // قاموس التفاعلات اليدوية (للدقة)
             const reactions = {
                 "Cl,Na": { name: "ملح الطعام", eq: "Na + Cl → NaCl", sym: "NaCl" },
                 "H,H,O": { name: "ماء", eq: "2H + O → H₂O", sym: "H₂O" },
                 "Fe,O,O,O": { name: "صدأ الحديد", eq: "4Fe + 3O₂ → 2Fe₂O₃", sym: "Fe₂O₃" },
-                "HCl,NaOH": { name: "تفاعل تعادل", eq: "HCl + NaOH → NaCl + H₂O", sym: "NaCl+H₂O" },
                 "AgNO₃,NaCl": { name: "راسب أبيض", eq: "AgNO₃ + NaCl → AgCl↓ + NaNO₃", sym: "AgCl" },
                 "CaCO₃,HCl,HCl": { name: "فوران (غاز CO₂)", eq: "CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑", sym: "CO₂" }
             };
 
             let result = reactions[inputKey];
             
-            // منطق عام للحمض والقاعدة
+            // منطق ذكي للأحماض والقواعد (حساب الرمز تلقائياً)
             if (!result) {
-                const hasAcid = benchItems.find(i => i.type === 'acid');
-                const hasBase = benchItems.find(i => i.type === 'base');
-                if (hasAcid && hasBase) {
-                    result = { name: "تفاعل تعادل", eq: `${hasAcid.s} + ${hasBase.s} → ملح + H₂O`, sym: "ملح+H₂O" };
+                const acid = benchItems.find(i => i.type === 'acid');
+                const base = benchItems.find(i => i.type === 'base');
+                
+                if (acid && base) {
+                    // محاولة استنتاج رمز الملح: (شق القاعدة + شق الحمض)
+                    // هذا تقريب برمجي لغرض المحاكاة
+                    let cation = base.s.replace(/(\(?OH\)?\d*)$/, ''); // حذف OH
+                    let anion = acid.s.replace(/^H(\d*)/, '').replace(/COOH$/, 'COO'); // حذف H
+                    
+                    // تصحيح خاص للأمونيا
+                    if(base.s.includes('NH')) cation = 'NH₄';
+
+                    let saltSym = cation + anion; 
+                    
+                    result = { 
+                        name: "تفاعل تعادل (ملح + ماء)", 
+                        eq: `${acid.s} + ${base.s} → ${saltSym} + H₂O`, 
+                        sym: `${saltSym}` 
+                    };
                 }
             }
+
             if (!result) result = { name: "مخلوط (لا تفاعل)", eq: benchItems.map(i=>i.s).join('+') + ' (Mix)', sym: "Mix" };
 
             wbSurface.innerHTML = '';
             const resContainer = document.createElement('div');
             resContainer.className = 'result-container';
             
-            // البيكر الكبير (يسار)
+            // البيكر الكبير
             const bigBeaker = document.createElement('div');
             bigBeaker.className = 'beaker beaker-large';
             let color = '#9b59b6';
@@ -286,7 +301,7 @@
             if(result.name.includes('صدأ')) color='#d35400';
             bigBeaker.innerHTML = `<div class="liquid-fill" style="background:${color}; height:60%"></div><span style="z-index:2">${result.sym}</span>`;
             
-            // المعلومات (يمين)
+            // المعلومات
             const infoDiv = document.createElement('div');
             infoDiv.className = 'result-info';
             infoDiv.innerHTML = `<div class="res-name">${result.name}</div><div class="res-eq">${result.eq}</div>`;
@@ -334,7 +349,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             }).then(r => {
-                if(r.ok) { showToast('✅ وصل التقييم لدسكورد!'); document.getElementById('rating-text').value=''; }
+                if(r.ok) { showToast('✅ تم ارسال تقييمك بنجاح'); document.getElementById('rating-text').value=''; }
                 else showToast('❌ خطأ في الإرسال');
             }).catch(() => showToast('❌ مشكلة اتصال'));
         }
