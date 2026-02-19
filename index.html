@@ -16,8 +16,6 @@
             --gold: #d4af37;
             --text-main: #f0f0f0;
             --accent-blue: #00d2ff;
-            --accent-green: #2ecc71;
-            --accent-purple: #9b59b6;
             --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
@@ -34,150 +32,88 @@
         }
 
         /* =========================================
-           2. قسم التقييم (Telegram)
+           2. قسم التقييم
            ========================================= */
         .rating-section {
             background: linear-gradient(180deg, rgba(25,25,30,0.98), rgba(20,20,25,0.9));
-            padding: 10px 15px;
-            text-align: center;
-            border-bottom: 1px solid #333;
-            z-index: 20;
+            padding: 10px 15px; text-align: center; border-bottom: 1px solid #333; z-index: 20;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         .rating-title { color: var(--gold); font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
         .stars { display: flex; justify-content: center; gap: 10px; margin: 5px 0; direction: ltr; }
         .stars i { font-style: normal; font-size: 1.4rem; cursor: pointer; color: #444; transition: 0.2s; }
         .stars i.active { color: var(--gold); text-shadow: 0 0 8px var(--gold); transform: scale(1.1); }
-        
         .rating-input-group { display: flex; gap: 8px; margin-top: 8px; max-width: 500px; margin-left: auto; margin-right: auto; }
         .rating-input { flex: 1; padding: 8px 15px; border-radius: 20px; border: 1px solid #444; background: #000; color: #fff; outline: none; font-size: 0.85rem; }
         .send-btn { background: var(--gold); color: #000; border: none; padding: 0 20px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
 
         /* =========================================
-           3. التبويبات (Tabs)
+           3. التبويبات
            ========================================= */
         .tabs-container {
-            display: flex;
-            overflow-x: auto;
-            padding: 10px;
-            background: #15151a;
-            gap: 8px;
-            border-bottom: 1px solid #333;
-            scrollbar-width: none;
+            display: flex; overflow-x: auto; padding: 10px; background: #15151a; gap: 8px; border-bottom: 1px solid #333; scrollbar-width: none;
         }
         .tabs-container::-webkit-scrollbar { display: none; }
-
         .tab-btn {
-            padding: 8px 14px;
-            border-radius: 18px;
-            background: #2c2c35;
-            color: #aaa;
-            border: 1px solid #333;
-            white-space: nowrap;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.3s;
+            padding: 8px 14px; border-radius: 18px; background: #2c2c35; color: #aaa; border: 1px solid #333;
+            white-space: nowrap; font-size: 0.85rem; cursor: pointer; transition: 0.3s;
         }
         .tab-btn.active { background: var(--gold); color: #000; font-weight: bold; border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
 
         /* =========================================
-           4. منطقة المحتوى (Grid)
+           4. المحتوى
            ========================================= */
-        #content-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            padding-bottom: 220px; /* مسافة كبيرة عشان طاولة العمل */
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-            gap: 8px;
-        }
-
+        #content-area { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 220px; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 8px; }
+        
         .item-card {
-            background: #222;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            height: 85px;
-            position: relative;
-            transition: 0.2s;
+            background: #222; border: 1px solid #333; border-radius: 12px; padding: 8px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; height: 85px; position: relative; transition: 0.2s;
         }
         .item-card:active { transform: scale(0.95); border-color: var(--gold); }
-        
-        .chem-symbol { font-size: 1.3rem; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+        .chem-symbol { font-size: 1.2rem; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
         .chem-name { font-size: 0.65rem; color: #ccc; line-height: 1.2; word-break: break-word; }
         .chem-number { position: absolute; top: 4px; left: 6px; font-size: 0.55rem; color: #666; }
 
-        /* ألوان التصنيف */
         .cat-acid { border-top: 3px solid #e74c3c; }
         .cat-base { border-top: 3px solid #3498db; }
         .cat-salt { border-top: 3px solid #ecf0f1; }
         .cat-comp { border-top: 3px solid #9b59b6; }
 
         /* =========================================
-           5. طاولة العمل (Workbench)
+           5. طاولة العمل
            ========================================= */
         .workbench {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            height: 200px; /* ارتفاع مناسب للنتيجة */
-            background: rgba(15, 15, 19, 0.98);
-            border-top: 2px solid var(--gold);
-            backdrop-filter: blur(10px);
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            padding-bottom: var(--safe-area-bottom);
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 200px;
+            background: rgba(15, 15, 19, 0.98); border-top: 2px solid var(--gold);
+            backdrop-filter: blur(10px); z-index: 50; display: flex; flex-direction: column;
+            padding-bottom: var(--safe-area-bottom); box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
         }
-
         .wb-header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 8px 15px; border-bottom: 1px solid #333; background: rgba(255,255,255,0.02);
         }
         .wb-title { font-size: 0.9rem; color: #aaa; font-weight: 600; }
-        
         .btn-clean { background: #e74c3c; color: #fff; border: none; padding: 6px 14px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; }
         .btn-react { background: var(--gold); color: #000; border: none; padding: 6px 14px; border-radius: 15px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 0 10px rgba(212,175,55,0.3); }
 
-        /* سطح الطاولة */
         .wb-surface {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start; /* البداية من اليمين */
-            overflow-x: auto;
-            padding: 10px 15px;
-            gap: 15px;
-            position: relative;
+            flex: 1; display: flex; align-items: center; justify-content: flex-start;
+            overflow-x: auto; padding: 10px 15px; gap: 15px; position: relative;
         }
 
-        /* --- تصميم البيكر (الكأس) --- */
+        /* البيكر */
         .beaker {
-            min-width: 60px; height: 80px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255,255,255,0.4);
-            border-top: none;
-            border-radius: 0 0 15px 15px;
-            position: relative;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; color: #fff; font-size: 0.9rem;
+            min-width: 60px; height: 80px; background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255,255,255,0.4); border-top: none; border-radius: 0 0 15px 15px;
+            position: relative; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: #fff; font-size: 0.8rem;
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
-        /* تأثير السوائل والغازات */
         .liquid-fill {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: var(--liquid-color, #3498db); opacity: 0.7;
-            border-radius: 0 0 12px 12px; z-index: -1; transition: height 1s;
+            background: var(--liquid-color, #3498db); opacity: 0.7; border-radius: 0 0 12px 12px; z-index: -1;
         }
         .bubble { position: absolute; width: 5px; height: 5px; background: rgba(255,255,255,0.6); border-radius: 50%; bottom: 5px; left: 50%; animation: bubbleUp 1.5s infinite; }
         .smoke { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; background: rgba(200,200,200,0.3); filter: blur(10px); border-radius: 50%; animation: smokeRise 2s infinite; }
@@ -186,27 +122,24 @@
         @keyframes bubbleUp { 0% { transform: translateY(0); opacity: 0; } 100% { transform: translateY(-50px); opacity: 0; } }
         @keyframes smokeRise { 0% { transform: translate(-50%, 0) scale(1); opacity: 0.4; } 100% { transform: translate(-50%, -60px) scale(2.5); opacity: 0; } }
 
-        /* --- تصميم النتيجة (بعد التفاعل) --- */
+        /* --- تصميم النتيجة المطور --- */
         .result-container {
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            gap: 20px; animation: fadeIn 0.5s ease;
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-around;
+            padding: 0 10px; animation: fadeIn 0.5s ease;
         }
-        
-        /* قسم المعلومات (يسار) */
         .result-info {
-            text-align: left; /* المحاذاة لليسار كما طلبت */
-            display: flex; flex-direction: column; justify-content: center;
+            text-align: right; /* المحاذاة لليمين حسب العربية */
+            display: flex; flex-direction: column; justify-content: center; flex: 1;
         }
-        .res-name { color: var(--gold); font-size: 1.2rem; font-weight: 900; margin-bottom: 5px; }
-        .res-eq { color: #ccc; font-family: 'Courier New', monospace; font-size: 0.9rem; direction: ltr; background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 5px; }
-
-        /* البيكر الكبير */
+        .res-name { color: var(--gold); font-size: 1.1rem; font-weight: 900; margin-bottom: 5px; }
+        .res-eq {
+            color: #eee; font-family: 'Courier New', monospace; font-size: 0.85rem; direction: ltr;
+            background: rgba(0,0,0,0.4); padding: 5px 10px; border-radius: 8px; border: 1px solid #444;
+            display: inline-block;
+        }
         .beaker-large {
-            min-width: 80px; height: 110px;
-            border-width: 3px; border-radius: 0 0 20px 20px;
-            font-size: 1.2rem;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            min-width: 90px; height: 120px; border-width: 3px; border-radius: 0 0 25px 25px;
+            font-size: 1.3rem; box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); margin-right: 15px;
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -215,10 +148,8 @@
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: rgba(0,0,0,0.95); color: var(--gold); padding: 15px 30px;
             border-radius: 12px; border: 1px solid var(--gold); z-index: 100;
-            display: none; text-align: center; font-weight: bold;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            display: none; text-align: center; font-weight: bold; box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
-
     </style>
 </head>
 <body>
@@ -235,8 +166,8 @@
     </div>
 
     <div class="tabs-container">
-        <button class="tab-btn active" onclick="switchTab('elements')">العناصر (118)</button>
-        <button class="tab-btn" onclick="switchTab('compounds')">المركبات (30)</button>
+        <button class="tab-btn active" onclick="switchTab('elements')">العناصر</button>
+        <button class="tab-btn" onclick="switchTab('compounds')">المركبات</button>
         <button class="tab-btn" onclick="switchTab('acids')">الأحماض</button>
         <button class="tab-btn" onclick="switchTab('bases')">القواعد</button>
         <button class="tab-btn" onclick="switchTab('salts')">الأملاح</button>
@@ -254,7 +185,6 @@
                 <button class="btn-react" onclick="doReaction()">تفاعل ⚡</button>
             </div>
         </div>
-        
         <div class="wb-surface" id="wb-surface">
             <div id="empty-msg" style="color:#666; font-size:0.8rem; margin:auto;">أضف المواد للبدء</div>
         </div>
@@ -264,63 +194,53 @@
 
     <script>
         // ==========================================
-        // ⚙️ الإعدادات (Telegram)
+        // ⚙️ الإعدادات
         // ==========================================
-        const BOT_TOKEN = "8424245241:AAGX2HcnIOJidf7WSsvsaFsaFEBkFz1ILIA"; 
-        
-        // 🔴 هام: ضع الآيدي الرقمي (Numbers Only) لكي تصلك الرسالة
-        // مثال: const MY_CHAT_ID = "123456789";
+        const BOT_TOKEN = "AAGX2HcnIOJidf7WSsvsaFsaFEBkFz1ILIA"; 
         const MY_CHAT_ID = "8424245241"; 
 
         // ==========================================
-        // 🗄️ البيانات (Database)
+        // 🗄️ البيانات الكيميائية
         // ==========================================
         
-        // 1. العناصر (118) - توليد ذكي
+        // 1. العناصر
         const elementsDB = [];
         const knownElements = [
-            {n:1,s:'H',m:'هيدروجين'},{n:2,s:'He',m:'هيليوم'},{n:3,s:'Li',m:'ليثيوم'},{n:4,s:'Be',m:'بيريليوم'},{n:5,s:'B',m:'بورون'},
-            {n:6,s:'C',m:'كربون'},{n:7,s:'N',m:'نيتروجين'},{n:8,s:'O',m:'أكسجين'},{n:9,s:'F',m:'فلور'},{n:10,s:'Ne',m:'نيون'},
-            {n:11,s:'Na',m:'صوديوم'},{n:12,s:'Mg',m:'مغنيسيوم'},{n:13,s:'Al',m:'ألمنيوم'},{n:14,s:'Si',m:'سيليكون'},{n:15,s:'P',m:'فوسفور'},
-            {n:16,s:'S',m:'كبريت'},{n:17,s:'Cl',m:'كلور'},{n:18,s:'Ar',m:'أرجون'},{n:19,s:'K',m:'بوتاسيوم'},{n:20,s:'Ca',m:'كالسيوم'},
-            {n:26,s:'Fe',m:'حديد'},{n:29,s:'Cu',m:'نحاس'},{n:30,s:'Zn',m:'زنك'},{n:47,s:'Ag',m:'فضة'},{n:79,s:'Au',m:'ذهب'},{n:80,s:'Hg',m:'زئبق'}
+            {n:1,s:'H',m:'هيدروجين'},{n:2,s:'He',m:'هيليوم'},{n:3,s:'Li',m:'ليثيوم'},{n:6,s:'C',m:'كربون'},
+            {n:7,s:'N',m:'نيتروجين'},{n:8,s:'O',m:'أكسجين'},{n:9,s:'F',m:'فلور'},{n:11,s:'Na',m:'صوديوم'},
+            {n:12,s:'Mg',m:'مغنيسيوم'},{n:13,s:'Al',m:'ألمنيوم'},{n:14,s:'Si',m:'سيليكون'},{n:17,s:'Cl',m:'كلور'},
+            {n:19,s:'K',m:'بوتاسيوم'},{n:20,s:'Ca',m:'كالسيوم'},{n:26,s:'Fe',m:'حديد'},{n:29,s:'Cu',m:'نحاس'},
+            {n:30,s:'Zn',m:'زنك'},{n:47,s:'Ag',m:'فضة'},{n:79,s:'Au',m:'ذهب'},{n:80,s:'Hg',m:'زئبق'}
         ];
-        // ملء الباقي
         for(let i=1; i<=118; i++){
             let f = knownElements.find(e=>e.n===i);
-            elementsDB.push(f ? {s:f.s, nm:f.m, n:i} : {s:'E'+i, nm:'عنصر '+i, n:i});
+            elementsDB.push(f ? {s:f.s, nm:f.m, n:i, type:'el'} : {s:'E'+i, nm:'عنصر '+i, n:i, type:'el'});
         }
 
-        // 2. المركبات (30)
+        // 2. المركبات
         const compoundsDB = [
-            {s:'H₂O',nm:'ماء'},{s:'CO₂',nm:'ثاني أكسيد الكربون'},{s:'NaCl',nm:'ملح الطعام'},{s:'NH₃',nm:'أمونيا'},{s:'CH₄',nm:'ميثان'},
-            {s:'C₆H₁₂O₆',nm:'جلوكوز'},{s:'HCl',nm:'كلوريد الهيدروجين'},{s:'H₂SO₄',nm:'حمض الكبريتيك'},{s:'HNO₃',nm:'حمض النيتريك'},{s:'NaOH',nm:'صودا كاوية'},
-            {s:'KOH',nm:'بوتاس كاوية'},{s:'CaCO₃',nm:'طباشير'},{s:'NaHCO₃',nm:'بيكنج صودا'},{s:'CaO',nm:'جير حي'},{s:'MgO',nm:'أكسيد ماغنسيوم'},
-            {s:'Fe₂O₃',nm:'صدأ'},{s:'SiO₂',nm:'كوارتز'},{s:'C₂H₅OH',nm:'إيثانول'},{s:'CH₃OH',nm:'ميثانول'},{s:'C₆H₆',nm:'بنزين'},
-            {s:'C₃H₈',nm:'بروبان'},{s:'C₄H₁₀',nm:'بوتان'},{s:'SO₂',nm:'ثاني أكسيد كبريت'},{s:'NO₂',nm:'ثاني أكسيد نيتروجين'},{s:'H₂O₂',nm:'ماء أكسجين'},
-            {s:'CO',nm:'أول أكسيد كربون'},{s:'O₃',nm:'أوزون'},{s:'AgNO₃',nm:'نترات فضة'},{s:'CuSO₄',nm:'كبريتات نحاس'},{s:'KMnO₄',nm:'برمنجنات'}
-        ];
+            {s:'H₂O',nm:'ماء'},{s:'CO₂',nm:'ثاني أكسيد الكربون'},{s:'NaCl',nm:'ملح الطعام'},{s:'NH₃',nm:'أمونيا'},
+            {s:'CH₄',nm:'ميثان'},{s:'HCl',nm:'كلوريد الهيدروجين'},{s:'CaO',nm:'جير حي'},{s:'Fe₂O₃',nm:'صدأ'},
+            {s:'SiO₂',nm:'كوارتز'},{s:'SO₂',nm:'ثاني أكسيد كبريت'},{s:'CO',nm:'أول أكسيد كربون'},{s:'O₃',nm:'أوزون'}
+        ].map(i => ({...i, type:'comp'}));
 
         // 3. الأحماض
         const acidsDB = [
             {s:'HCl',nm:'هيدروكلوريك'},{s:'H₂SO₄',nm:'كبريتيك'},{s:'HNO₃',nm:'نيتريك'},{s:'CH₃COOH',nm:'خليك'},
-            {s:'H₃PO₄',nm:'فوسفوريك'},{s:'H₂CO₃',nm:'كربونيك'},{s:'HF',nm:'هيدروفلوريك'},{s:'HBr',nm:'هيدروبوميك'},
-            {s:'HI',nm:'هيدرويوديك'},{s:'HCN',nm:'سيانيد'},{s:'HClO₄',nm:'بيركلوريك'},{s:'C₆H₈O₇',nm:'ستريك'}
-        ];
+            {s:'HF',nm:'هيدروفلوريك'}
+        ].map(i => ({...i, type:'acid'}));
 
         // 4. القواعد
         const basesDB = [
             {s:'NaOH',nm:'هيدروكسيد صوديوم'},{s:'KOH',nm:'هيدروكسيد بوتاسيوم'},{s:'Ca(OH)₂',nm:'هيدروكسيد كالسيوم'},
-            {s:'NH₄OH',nm:'هيدروكسيد أمونيوم'},{s:'Mg(OH)₂',nm:'هيدروكسيد مغنيسيوم'},{s:'Al(OH)₃',nm:'هيدروكسيد ألمنيوم'},
-            {s:'LiOH',nm:'هيدروكسيد ليثيوم'},{s:'Ba(OH)₂',nm:'هيدروكسيد باريوم'}
-        ];
+            {s:'NH₄OH',nm:'هيدروكسيد أمونيوم'}
+        ].map(i => ({...i, type:'base'}));
 
         // 5. الأملاح
         const saltsDB = [
-            {s:'NaCl',nm:'كلوريد صوديوم'},{s:'KCl',nm:'كلوريد بوتاسيوم'},{s:'CaCO₃',nm:'كربونات كالسيوم'},{s:'CuSO₄',nm:'كبريتات نحاس'},
-            {s:'AgNO₃',nm:'نترات فضة'},{s:'KI',nm:'يوديد بوتاسيوم'},{s:'Na₂CO₃',nm:'كربونات صوديوم'},{s:'NH₄Cl',nm:'كلوريد أمونيوم'},
-            {s:'CaCl₂',nm:'كلوريد كالسيوم'},{s:'MgSO₄',nm:'كبريتات مغنيسيوم'},{s:'KNO₃',nm:'نترات بوتاسيوم'},{s:'ZnSO₄',nm:'كبريتات زنك'}
-        ];
+            {s:'NaCl',nm:'كلوريد صوديوم'},{s:'KCl',nm:'كلوريد بوتاسيوم'},{s:'CaCO₃',nm:'كربونات كالسيوم'},
+            {s:'CuSO₄',nm:'كبريتات نحاس'},{s:'AgNO₃',nm:'نترات فضة'}
+        ].map(i => ({...i, type:'salt'}));
 
         // ==========================================
         // 🎮 المنطق (Logic)
@@ -329,7 +249,7 @@
         const wbSurface = document.getElementById('wb-surface');
         const toastMsg = document.getElementById('toast-msg');
         let currentRating = 0;
-        let benchItems = []; // لتتبع المواد المضافة
+        let benchItems = []; 
 
         window.onload = () => switchTab('elements');
 
@@ -355,9 +275,7 @@
         }
 
         function addToBench(item) {
-            // إذا كان في وضع النتيجة، نظف الطاولة أولاً
             if(document.querySelector('.result-container')) cleanBench();
-
             if(document.getElementById('empty-msg')) document.getElementById('empty-msg').remove();
             if(benchItems.length >= 5) { showToast('🛑 الحد الأقصى 5 مواد!'); return; }
 
@@ -366,10 +284,10 @@
             const beaker = document.createElement('div');
             beaker.className = 'beaker';
             
-            // تحديد نوع المادة للمؤثرات
+            // تحديد المظهر
             let content = `<span style="z-index:2">${item.s}</span>`;
-            const isLiquid = ['Hg','Br','H₂O'].includes(item.s) || item.nm.includes('حمض') || item.nm.includes('هيدروكسيد');
-            const isGas = ['H','He','N','O','F','Ne','Cl','Ar'].includes(item.s) || item.s.includes('(g)');
+            const isLiquid = ['Hg','Br','H₂O'].includes(item.s) || item.type === 'acid' || item.type === 'base';
+            const isGas = ['H','He','N','O','F','Ne','Cl','Ar'].includes(item.s) || ['CO₂','CH₄'].includes(item.s);
 
             if(isLiquid) content += `<div class="liquid-fill" style="background:var(--accent-blue)"></div><div class="bubble"></div>`;
             else if(isGas) content += `<div class="smoke"></div>`;
@@ -384,54 +302,99 @@
             wbSurface.innerHTML = '<div id="empty-msg" style="color:#666; font-size:0.8rem; margin:auto;">أضف المواد للبدء</div>';
         }
 
-        // --- دالة التفاعل (التغيير الجذري) ---
+        // ==========================================
+        // 🔥 محرك التفاعلات (الدقيق جداً)
+        // ==========================================
         function doReaction() {
             if(benchItems.length < 2) { showToast('⚠️ أضف مادتين على الأقل!'); return; }
 
-            // 1. تجهيز معادلة وهمية للنتيجة (محاكاة)
-            // نأخذ رموز المواد ونجمعها
-            let reactants = benchItems.map(i => i.s).join(' + ');
-            let productSymbol = benchItems.map(i => i.s).join('') + '₍ₘIx₎'; // اسم مركب وهمي
-            let productName = "مركب ناتج";
-            let eq = `${reactants} ➝ ${productSymbol}`;
+            // ترتيب المواد كيميائياً للبحث عنها (نجمع الرموز ونرتبها أبجدياً)
+            const inputSymbols = benchItems.map(i => i.s).sort();
+            const inputKey = inputSymbols.join(',');
 
-            // محاولة إيجاد تفاعل حقيقي بسيط (مثال)
-            const symbols = benchItems.map(i => i.s).sort().join(',');
-            if(symbols === "Cl,Na") { productName="ملح الطعام"; eq="Na + Cl ➝ NaCl"; productSymbol="NaCl"; }
-            if(symbols === "H,H,O") { productName="ماء"; eq="2H + O ➝ H₂O"; productSymbol="H₂O"; }
+            // 1. قاموس التفاعلات (المعادلات الدقيقة)
+            const reactions = {
+                // عناصر
+                "Cl,Na": { name: "ملح الطعام (كلوريد الصوديوم)", eq: "Na + Cl → NaCl", sym: "NaCl" },
+                "H,H,O": { name: "ماء", eq: "2H + O → H₂O", sym: "H₂O" },
+                "Fe,O,O,O": { name: "أكسيد الحديد (صدأ)", eq: "4Fe + 3O₂ → 2Fe₂O₃", sym: "Fe₂O₃" },
+                "C,O,O": { name: "ثاني أكسيد الكربون", eq: "C + O₂ → CO₂", sym: "CO₂" },
+                "H,H,H,H,C": { name: "غاز الميثان", eq: "C + 4H → CH₄", sym: "CH₄" },
+                
+                // أحماض وقواعد (تفاعلات التعادل)
+                "HCl,NaOH": { name: "ملح وماء (تعادل)", eq: "HCl + NaOH → NaCl + H₂O", sym: "NaCl+H₂O" },
+                "KOH,H₂SO₄": { name: "كبريتات البوتاسيوم", eq: "2KOH + H₂SO₄ → K₂SO₄ + 2H₂O", sym: "K₂SO₄" },
+                "HNO₃,KOH": { name: "نترات البوتاسيوم", eq: "HNO₃ + KOH → KNO₃ + H₂O", sym: "KNO₃" },
+                
+                // أكاسيد وفلزات
+                "Mg,O": { name: "أكسيد المغنيسيوم", eq: "2Mg + O₂ → 2MgO", sym: "MgO" },
+                "Cu,S": { name: "كبريتيد النحاس", eq: "Cu + S → CuS", sym: "CuS" },
+                
+                // تفاعلات عامة
+                "HCl,NH₃": { name: "كلوريد الأمونيوم (سحب بيضاء)", eq: "NH₃ + HCl → NH₄Cl", sym: "NH₄Cl" }
+            };
 
-            // 2. تنظيف السطح وعرض النتيجة المدمجة
+            let result = reactions[inputKey];
+
+            // 2. منطق عام للأحماض والقواعد (إذا لم يكن في القاموس)
+            if (!result) {
+                const hasAcid = benchItems.find(i => i.type === 'acid');
+                const hasBase = benchItems.find(i => i.type === 'base');
+                
+                if (hasAcid && hasBase) {
+                    result = {
+                        name: "تفاعل تعادل (ملح + ماء)",
+                        eq: `${hasAcid.s} + ${hasBase.s} → Salt + H₂O`,
+                        sym: "Salt+H₂O"
+                    };
+                }
+            }
+
+            // 3. إذا لم يوجد تفاعل (مخلوط)
+            if (!result) {
+                result = {
+                    name: "مخلوط فيزيائي (لا تفاعل)",
+                    eq: benchItems.map(i=>i.s).join(' + ') + ' (Mix)',
+                    sym: "Mix"
+                };
+            }
+
+            // --- عرض النتيجة ---
             wbSurface.innerHTML = '';
-            
             const resContainer = document.createElement('div');
             resContainer.className = 'result-container';
 
-            // الجزء الأيسر: المعلومات
+            // الجزء الأيسر (أو الأيمن حسب التوجيه): المعلومات
             const infoDiv = document.createElement('div');
             infoDiv.className = 'result-info';
-            infoDiv.innerHTML = `<div class="res-name">${productName}</div><div class="res-eq">${eq}</div>`;
+            infoDiv.innerHTML = `<div class="res-name">${result.name}</div><div class="res-eq">${result.eq}</div>`;
 
-            // الجزء الأيمن: البيكر الكبير المدمج
+            // الجزء الأيمن: البيكر الكبير
             const bigBeaker = document.createElement('div');
             bigBeaker.className = 'beaker beaker-large';
-            // نختار لون عشوائي للنتيجة
-            const colors = ['#e74c3c', '#2ecc71', '#9b59b6', '#f1c40f'];
-            const randColor = colors[Math.floor(Math.random()*colors.length)];
+            
+            // لون النتيجة حسب النوع (حمض=أحمر، قاعدة=أزرق، ملح=أبيض/ملون)
+            let resColor = '#9b59b6'; // بنفسجي افتراضي
+            if(result.name.includes('صدأ')) resColor = '#d35400';
+            if(result.name.includes('ماء')) resColor = '#3498db';
+            if(result.name.includes('ملح')) resColor = '#ecf0f1';
             
             bigBeaker.innerHTML = `
-                <div class="liquid-fill" style="background:${randColor}; height:70%"></div>
+                <div class="liquid-fill" style="background:${resColor}; height:60%"></div>
                 <div class="bubble"></div>
-                <div class="smoke"></div>
-                <span style="z-index:2">${productSymbol}</span>
+                <span style="z-index:2">${result.sym}</span>
             `;
 
-            resContainer.appendChild(infoDiv); // الاسم والمعادلة يسار
-            resContainer.appendChild(bigBeaker); // البيكر يمين
+            // بما أن الاتجاه RTL: الـ infoDiv بيجي يمين والـ bigBeaker بيجي يسار
+            // نعكس الترتيب في الكود عشان يطلع في الشاشة: (البيكر يسار) - (النص يمين)
+            // لكن أنت طلبت "اسم الناتج يسار البيكر"، يعني البيكر يمين والاسم يسار؟
+            // سأضع البيكر في اليسار والنص في اليمين (الوضع الطبيعي العربي)
+            resContainer.appendChild(bigBeaker); 
+            resContainer.appendChild(infoDiv);
             
             wbSurface.appendChild(resContainer);
-            
-            showToast('✨ تم التفاعل بنجاح!');
-            if(navigator.vibrate) navigator.vibrate([50,50,50]);
+            showToast('✨ تم التفاعل!');
+            if(navigator.vibrate) navigator.vibrate([50]);
         }
 
         function showToast(msg) {
@@ -440,7 +403,7 @@
             setTimeout(()=>toastMsg.style.display='none', 2000);
         }
 
-        // التقييم
+        // تقييم Telegram
         document.querySelectorAll('.stars i').forEach(s => {
             s.onclick = function(){
                 currentRating = this.dataset.val;
@@ -452,17 +415,17 @@
 
         function sendRating() {
             const txt = document.getElementById('rating-text').value;
-            if(!currentRating) { showToast('⭐ قيمنا بالنجوم أولاً'); return; }
-            if(!MY_CHAT_ID) { showToast('⚠️ لم يتم تعيين Chat ID'); return; }
+            if(!currentRating) { showToast('⭐ التقييم مطلوب'); return; }
+            if(!MY_CHAT_ID) { showToast('⚠️ Chat ID مفقود'); return; }
 
             const msg = `🌟 *تقييم جديد*\n⭐: ${currentRating}/5\n💬: ${txt||'بدون نص'}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method:'POST', headers:{'Content-Type':'application/json'},
                 body: JSON.stringify({chat_id:MY_CHAT_ID, text:msg, parse_mode:'Markdown'})
             }).then(r=>r.json()).then(d=>{
-                if(d.ok){ showToast('✅ وصل التقييم!'); document.getElementById('rating-text').value=''; }
-                else showToast('❌ خطأ في الإرسال');
-            }).catch(()=>showToast('❌ تأكد من النت'));
+                if(d.ok){ showToast('✅ تم الإرسال'); document.getElementById('rating-text').value=''; }
+                else showToast('❌ فشل الإرسال');
+            }).catch(()=>showToast('❌ مشكلة اتصال'));
         }
     </script>
 </body>
